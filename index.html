@@ -1943,28 +1943,30 @@
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Vérifie si le paramètre success=1 est présent dans l'URL
     const urlParams = new URLSearchParams(window.location.search);
+
     if (urlParams.get("success") === "1") {
 
-        // Affiche la notification verte (ta fonction existe déjà)
+        // Affiche le message vert
         showNotification("Message envoyé avec succès !", "success");
 
         // Vide le formulaire
         const form = document.getElementById("contactForm");
         if (form) form.reset();
 
-        // Nettoie l'URL sans recharger la page
+        // Nettoie l’URL pour enlever ?success=1
         history.replaceState(null, "", "https://aymenmallak4.github.io/aymen-mallak-portfolio.github.io/#contact");
     }
 });
 </script>
 
 
+
 </body>
 
 
 </html>
+
 
 
 
