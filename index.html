@@ -1451,7 +1451,8 @@
                                 <textarea class="form-control" id="message" name="message" rows="6" required></textarea>
                             </div>
 
-                            <input type="hidden" name="_redirect" value="https://google.com">
+                            <input type="hidden" name="_redirect" value="https://aymenmallak4.github.io/aymen-mallak-portfolio.github.io/#contact?success=1">
+
 
                             <div class="text-center">
                                 <button type="submit" class="btn-contact">
@@ -1952,6 +1953,28 @@
         `;
         document.head.appendChild(style);
     </script>
+
+                <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Vérifie si le paramètre success=1 est présent dans l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("success") === "1") {
+
+        // Affiche la notification verte (ta fonction existe déjà)
+        showNotification("Message envoyé avec succès !", "success");
+
+        // Vide le formulaire
+        const form = document.getElementById("contactForm");
+        if (form) form.reset();
+
+        // Nettoie l'URL sans recharger la page
+        history.replaceState(null, "", "https://aymenmallak4.github.io/aymen-mallak-portfolio.github.io/#contact");
+    }
+});
+</script>
+
 </body>
+
 
 </html>
