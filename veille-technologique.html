@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille Technologique — Aymen Mallak</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1; --dark: #0f0f23; --light: #f8fafc; --light-gray: #e2e8f0;
+            --text-primary: #1e293b; --text-secondary: #475569;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1); --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --border-radius: 16px; --border-radius-lg: 24px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--text-primary); overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--light-gray); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--light-gray); padding: 1rem 0; box-shadow: var(--shadow-lg); }
+        .navbar-brand { font-weight: 700; font-size: 1.3rem; color: var(--text-primary) !important; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .navbar-brand::before { content: ""; width: 8px; height: 8px; background: var(--gradient-primary); border-radius: 50%; }
+        .btn-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; background: rgba(99,102,241,0.1); color: var(--primary); border: none; border-radius: 50px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; }
+        .btn-back:hover { background: var(--primary); color: white; transform: translateX(-3px); }
+
+        .project-hero { min-height: 55vh; background: var(--gradient-hero); display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
+        .project-hero::before { content: ""; position: absolute; inset: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100%25" height="100%25" fill="url(%23grid)"/></svg>'); opacity: 0.4; }
+        .hero-inner { position: relative; z-index: 2; color: white; padding: 3rem 0; }
+        .project-icon-big { width: 100px; height: 100px; background: rgba(255,255,255,0.2); border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; margin-bottom: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
+        .project-hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .project-hero .lead { opacity: 0.9; font-size: 1.1rem; max-width: 600px; }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .meta-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.15); padding: 0.4rem 0.9rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.2); }
+
+        .content-section { padding: 80px 0; }
+        .content-card { background: white; border-radius: var(--border-radius-lg); padding: 2.5rem; box-shadow: var(--shadow-xl); border: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .content-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-hero); }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.75rem; }
+        .card-title i { color: var(--primary); }
+        .tech-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0.25rem; background: rgba(99,102,241,0.08); color: var(--primary); border: 1px solid rgba(99,102,241,0.2); }
+        .task-list { list-style: none; padding: 0; }
+        .task-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--light-gray); display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); font-size: 0.95rem; }
+        .task-list li:last-child { border-bottom: none; }
+        .task-list li::before { content: ""; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; margin-top: 0.4rem; flex-shrink: 0; }
+        .competence-item { background: rgba(99,102,241,0.05); padding: 1.25rem; border-radius: var(--border-radius); border: 1px solid rgba(99,102,241,0.1); text-align: center; transition: all 0.3s ease; margin-bottom: 0.75rem; }
+        .competence-item:hover { background: rgba(99,102,241,0.12); transform: translateY(-3px); }
+        .competence-item i { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.5rem; display: block; }
+        .competence-item span { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+        .bilan-card { background: var(--gradient-hero); color: white; border-radius: var(--border-radius-lg); padding: 2.5rem; margin-bottom: 2rem; }
+        .bilan-card h3 { font-weight: 700; margin-bottom: 1rem; }
+        .bilan-card p { opacity: 0.9; line-height: 1.7; }
+        .page-footer { background: var(--dark); color: rgba(255,255,255,0.6); padding: 2rem 0; text-align: center; font-size: 0.9rem; }
+        .page-footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        .page-footer a:hover { color: white; }
+
+        /* Arbre de veille */
+        .tree-container { background: #1e293b; border-radius: var(--border-radius); padding: 2rem; overflow-x: auto; }
+        .tree { display: flex; flex-direction: column; align-items: center; }
+        .tree-root { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem; text-align: center; position: relative; margin-bottom: 2rem; }
+        .tree-root::after { content: ""; position: absolute; bottom: -1rem; left: 50%; transform: translateX(-50%); width: 2px; height: 1rem; background: rgba(255,255,255,0.3); }
+        .tree-branches { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; position: relative; }
+        .tree-branches::before { content: ""; position: absolute; top: -1rem; left: 10%; right: 10%; height: 2px; background: rgba(255,255,255,0.15); }
+        .tree-branch { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; min-width: 180px; position: relative; }
+        .tree-branch::before { content: ""; position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); width: 2px; height: 1rem; background: rgba(255,255,255,0.2); }
+        .branch-title { background: rgba(99,102,241,0.4); border: 1px solid rgba(99,102,241,0.6); color: white; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-align: center; width: 100%; }
+        .branch-items { display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
+        .branch-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.78rem; text-align: center; font-style: italic; }
+
+        /* Etapes méthode */
+        .etape { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid var(--light-gray); }
+        .etape:last-child { border-bottom: none; }
+        .etape-num { width: 36px; height: 36px; background: var(--gradient-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; margin-top: 0.1rem; }
+        .etape-content strong { color: var(--text-primary); display: block; margin-bottom: 0.2rem; font-size: 0.95rem; }
+        .etape-content p { color: var(--text-secondary); font-size: 0.88rem; margin: 0; line-height: 1.6; }
+
+        /* Placeholder articles */
+        .articles-placeholder { background: rgba(99,102,241,0.04); border: 2px dashed rgba(99,102,241,0.25); border-radius: var(--border-radius); padding: 2rem; text-align: center; }
+        .articles-placeholder i { font-size: 2.5rem; color: rgba(99,102,241,0.3); margin-bottom: 1rem; display: block; }
+        .articles-placeholder p { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
+
+        @media (max-width: 768px) { .content-section { padding: 50px 0; } .content-card { padding: 1.5rem; } .tree-branches { gap: 1rem; } .tree-branch { min-width: 140px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href="index.html">Aymen Mallak</a>
+            <a href="index.html#projects" class="btn-back"><i class="fas fa-arrow-left"></i> Retour aux projets</a>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="container hero-inner">
+            <div class="project-icon-big" data-aos="fade-right"><i class="fas fa-satellite-dish"></i></div>
+            <h1 data-aos="fade-up" data-aos-delay="100">Veille Technologique</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="200">
+                Les chatbots IA au service des entreprises — collecte, tri et analyse des tendances du secteur.
+            </p>
+            <div class="hero-meta" data-aos="fade-up" data-aos-delay="300">
+                <span class="meta-badge"><i class="fas fa-calendar"></i> Période : dernier mois</span>
+                <span class="meta-badge"><i class="fas fa-robot"></i> Sujet : Chatbots IA & service client</span>
+                <span class="meta-badge"><i class="fas fa-graduation-cap"></i> BTS SIO SLAM — 2ᵉ année</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <!-- Méthode -->
+                    <div class="content-card" data-aos="fade-up">
+                        <div class="card-title"><i class="fas fa-cogs"></i> Méthode de mise en place</div>
+                        <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem;">
+                            J'ai mis en place une veille structurée sur le sujet des <strong>chatbots IA appliqués au service client des entreprises</strong>,
+                            en suivant les 3 étapes fondamentales : collecter, trier/analyser, diffuser.
+                        </p>
+                        <div class="etape">
+                            <div class="etape-num">1</div>
+                            <div class="etape-content">
+                                <strong>Sujet de veille</strong>
+                                <p>Les chatbots IA et leur adoption dans le service client des entreprises : fonctionnement technique, avantages, limites et tendances du marché.</p>
+                            </div>
+                        </div>
+                        <div class="etape">
+                            <div class="etape-num">2</div>
+                            <div class="etape-content">
+                                <strong>Outil utilisé : Feedly (flux RSS)</strong>
+                                <p>J'utilise Feedly pour agréger automatiquement les articles issus de sources spécialisées. Cela me permet de suivre plusieurs sources en un seul endroit et de filtrer par date (dernier mois) pour rester pertinent.</p>
+                            </div>
+                        </div>
+                        <div class="etape">
+                            <div class="etape-num">3</div>
+                            <div class="etape-content">
+                                <strong>Sources suivies</strong>
+                                <p>Articles issus de la presse informatique et de sites spécialisés dans l'intelligence artificielle et la transformation numérique des entreprises.</p>
+                            </div>
+                        </div>
+                        <div class="etape">
+                            <div class="etape-num">4</div>
+                            <div class="etape-content">
+                                <strong>Période de veille retenue</strong>
+                                <p>Le dernier mois — les articles antérieurs à cette période ne sont pas traités conformément aux règles de la veille (pas de rétroactivité).</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestion et tri -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="50">
+                        <div class="card-title"><i class="fas fa-filter"></i> Gestion et tri des informations</div>
+                        <ul class="task-list">
+                            <li>Lecture rapide des titres et résumés dans Feedly pour écarter les articles hors sujet</li>
+                            <li>Élimination des doublons et des contenus trop commerciaux ou publicitaires</li>
+                            <li>Sélection des articles apportant une information nouvelle et exploitable</li>
+                            <li>Classement par thématique : <strong>Fonctionnement technique</strong> et <strong>Adoption par les entreprises</strong></li>
+                            <li>Pour chaque article retenu : analyse (de quoi parle-t-il, quelle tendance, quel impact)</li>
+                        </ul>
+                        <div style="background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:10px;padding:1rem;margin-top:1rem;">
+                            <p style="color:#92400e;font-size:0.88rem;margin:0;"><i class="fas fa-share-alt me-2"></i><strong>Diffusion :</strong> La veille n'a pas encore été diffusée formellement. Elle sera partagée prochainement dans le cadre du portfolio et potentiellement sur LinkedIn.</p>
+                        </div>
+                    </div>
+
+                    <!-- Plan de veille / arbre -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-title"><i class="fas fa-sitemap"></i> Plan de veille — Arbre thématique</div>
+                        <div class="tree-container">
+                            <div class="tree">
+                                <div class="tree-root">🤖 Chatbots IA & Service Client</div>
+                                <div class="tree-branches">
+                                    <div class="tree-branch">
+                                        <div class="branch-title">⚙️ Fonctionnement technique</div>
+                                        <div class="branch-items">
+                                            <div class="branch-item">Modèles de langage (LLM)</div>
+                                            <div class="branch-item">Traitement du langage naturel (NLP)</div>
+                                            <div class="branch-item">Intégration API / CRM</div>
+                                            <div class="branch-item">Articles à ajouter</div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-branch">
+                                        <div class="branch-title">🏢 Adoption par les entreprises</div>
+                                        <div class="branch-items">
+                                            <div class="branch-item">Cas d'usage concrets</div>
+                                            <div class="branch-item">ROI & gains de productivité</div>
+                                            <div class="branch-item">Secteurs pionniers</div>
+                                            <div class="branch-item">Articles à ajouter</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="color:var(--text-secondary);font-size:0.82rem;margin-top:1rem;text-align:center;font-style:italic;">* Les articles seront positionnés dans les branches correspondantes au fur et à mesure de la sélection.</p>
+                    </div>
+
+                    <!-- Articles sélectionnés -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="card-title"><i class="fas fa-newspaper"></i> Articles sélectionnés</div>
+                        <div class="articles-placeholder">
+                            <i class="fas fa-clock"></i>
+                            <p><strong>Section en cours de complétion</strong><br>Les 15 articles sélectionnés seront ajoutés ici prochainement, avec pour chacun : titre, source, date, thématique et justification de la sélection.</p>
+                        </div>
+                    </div>
+
+                    <!-- Synthèse -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-title"><i class="fas fa-chart-line"></i> Synthèse de la veille</div>
+                        <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1rem;">
+                            Les chatbots IA représentent aujourd'hui une transformation majeure du service client. Deux grandes tendances se dégagent de l'analyse :
+                        </p>
+                        <div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1rem;">
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <strong style="color:var(--text-primary);font-size:0.9rem;">⚙️ Sur le plan technique</strong>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0.4rem 0 0;">Les modèles de langage (LLM) comme GPT permettent aux chatbots de comprendre et de générer des réponses de plus en plus naturelles. L'intégration avec les outils CRM des entreprises est devenue un enjeu central pour personnaliser les échanges.</p>
+                            </div>
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <strong style="color:var(--text-primary);font-size:0.9rem;">🏢 Sur le plan de l'adoption</strong>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0.4rem 0 0;">Les entreprises adoptent massivement les chatbots pour réduire les coûts de support et améliorer la disponibilité (24h/24). Les secteurs bancaire, e-commerce et télécom sont les plus avancés. Cependant, les limites (compréhension contextuelle, gestion des émotions) freinent encore une adoption totale.</p>
+                            </div>
+                        </div>
+                        <div style="background:rgba(99,102,241,0.06);border-left:4px solid var(--primary);padding:1rem;border-radius:0 10px 10px 0;">
+                            <p style="color:var(--text-secondary);font-size:0.88rem;margin:0;font-style:italic;"><strong style="color:var(--primary);">Enjeu clé :</strong> Les chatbots IA ne remplacent pas encore complètement l'humain, mais deviennent un premier niveau de traitement incontournable dans les organisations. Le métier de développeur SLAM est directement concerné par l'intégration de ces solutions via des API.</p>
+                        </div>
+                    </div>
+
+                    <!-- Bilan -->
+                    <div class="bilan-card" data-aos="fade-up" data-aos-delay="250">
+                        <h3><i class="fas fa-star me-2"></i>Bilan de la démarche</h3>
+                        <p>
+                            Cette veille m'a permis de mieux comprendre comment l'intelligence artificielle transforme concrètement les métiers de l'informatique et du service client. En tant que futur développeur SLAM, cette connaissance est directement applicable : l'intégration d'API IA dans des applications web ou desktop est une compétence de plus en plus demandée sur le marché.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="200">
+                        <div class="card-title"><i class="fas fa-trophy"></i> Compétences mobilisées</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.1);border-radius:10px;padding:0.9rem;margin-bottom:0.6rem;">
+                                <strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Organiser son développement professionnel</strong>
+                                Mettre en œuvre des outils et stratégies de veille informationnelle
+                            </div>
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.1);border-radius:10px;padding:0.9rem;margin-bottom:0.6rem;">
+                                <strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Mettre en place son environnement d'apprentissage personnel</strong>
+                                Utilisation de Feedly pour structurer la collecte d'informations
+                            </div>
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.1);border-radius:10px;padding:0.9rem;">
+                                <strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Développer son projet professionnel</strong>
+                                Identification des tendances du marché liées au métier de développeur
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="300">
+                        <div class="card-title"><i class="fas fa-info-circle"></i> Infos veille</div>
+                        <table style="width:100%; font-size:0.9rem; color:var(--text-secondary);">
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Sujet</td><td style="padding:0.6rem 0;">Chatbots IA & service client</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Outil</td><td style="padding:0.6rem 0;">Feedly (flux RSS)</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Période</td><td style="padding:0.6rem 0;">Dernier mois</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Thématiques</td><td style="padding:0.6rem 0;">2 branches</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Articles</td><td style="padding:0.6rem 0;">À compléter (15 min.)</td></tr>
+                            <tr><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Diffusion</td><td style="padding:0.6rem 0;">À venir</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="400">
+                        <div class="card-title"><i class="fas fa-lightbulb"></i> Projet professionnel</div>
+                        <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7;">
+                            Mon projet professionnel est encore en construction. Cette veille m'aide à découvrir les évolutions du secteur et à affiner mes centres d'intérêt, notamment autour du développement d'applications intégrant des technologies IA.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-footer">
+        <p>© 2025 <a href="index.html">Aymen Mallak</a> — Portfolio BTS SIO SLAM</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true });</script>
+</body>
+</html>

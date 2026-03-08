@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet ADA C# — Aymen Mallak</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1; --dark: #0f0f23; --light: #f8fafc; --light-gray: #e2e8f0;
+            --text-primary: #1e293b; --text-secondary: #475569;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1); --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --border-radius: 16px; --border-radius-lg: 24px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--text-primary); overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--light-gray); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--light-gray); padding: 1rem 0; box-shadow: var(--shadow-lg); }
+        .navbar-brand { font-weight: 700; font-size: 1.3rem; color: var(--text-primary) !important; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .navbar-brand::before { content: ""; width: 8px; height: 8px; background: var(--gradient-primary); border-radius: 50%; }
+        .btn-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; background: rgba(99,102,241,0.1); color: var(--primary); border: none; border-radius: 50px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; }
+        .btn-back:hover { background: var(--primary); color: white; transform: translateX(-3px); }
+        .project-hero { min-height: 55vh; background: var(--gradient-hero); display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
+        .project-hero::before { content: ""; position: absolute; inset: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100%25" height="100%25" fill="url(%23grid)"/></svg>'); opacity: 0.4; }
+        .hero-inner { position: relative; z-index: 2; color: white; padding: 3rem 0; }
+        .project-icon-big { width: 100px; height: 100px; background: rgba(255,255,255,0.2); border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; margin-bottom: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
+        .project-hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .project-hero .lead { opacity: 0.9; font-size: 1.1rem; max-width: 600px; }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .meta-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.15); padding: 0.4rem 0.9rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.2); }
+        .content-section { padding: 80px 0; }
+        .content-card { background: white; border-radius: var(--border-radius-lg); padding: 2.5rem; box-shadow: var(--shadow-xl); border: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .content-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-hero); }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.75rem; }
+        .card-title i { color: var(--primary); font-size: 1.1rem; }
+        .tech-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0.25rem; background: rgba(99,102,241,0.08); color: var(--primary); border: 1px solid rgba(99,102,241,0.2); }
+        .task-list { list-style: none; padding: 0; }
+        .task-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--light-gray); display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); font-size: 0.95rem; }
+        .task-list li:last-child { border-bottom: none; }
+        .task-list li::before { content: ""; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; margin-top: 0.4rem; flex-shrink: 0; }
+        .competence-item { background: rgba(99,102,241,0.05); padding: 1.25rem; border-radius: var(--border-radius); border: 1px solid rgba(99,102,241,0.1); text-align: center; transition: all 0.3s ease; margin-bottom: 0.75rem; }
+        .competence-item:hover { background: rgba(99,102,241,0.12); transform: translateY(-3px); }
+        .competence-item i { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.5rem; display: block; }
+        .competence-item span { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+        .bilan-card { background: var(--gradient-hero); color: white; border-radius: var(--border-radius-lg); padding: 2.5rem; margin-bottom: 2rem; }
+        .bilan-card h3 { font-weight: 700; margin-bottom: 1rem; }
+        .bilan-card p { opacity: 0.9; line-height: 1.7; }
+        .code-snippet { background: #1e293b; color: #e2e8f0; padding: 1.5rem; border-radius: var(--border-radius); font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; margin: 1rem 0; overflow-x: auto; }
+        .code-snippet .keyword { color: #c084fc; }
+        .code-snippet .string { color: #86efac; }
+        .code-snippet .comment { color: #64748b; }
+        .page-footer { background: var(--dark); color: rgba(255,255,255,0.6); padding: 2rem 0; text-align: center; font-size: 0.9rem; }
+        .page-footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        .page-footer a:hover { color: white; }
+        @media (max-width: 768px) { .content-section { padding: 50px 0; } .content-card { padding: 1.5rem; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href="index.html">Aymen Mallak</a>
+            <a href="index.html#projects" class="btn-back"><i class="fas fa-arrow-left"></i> Retour aux projets</a>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="container hero-inner">
+            <div class="project-icon-big" data-aos="fade-right"><i class="fas fa-desktop"></i></div>
+            <h1 data-aos="fade-up" data-aos-delay="100">Projet ADA — Application Visual Studio C# Entity</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="200">
+                Application back-office permettant au responsable d'une agence d'administrer les données de son agence de location de véhicules.
+            </p>
+            <div class="hero-meta" data-aos="fade-up" data-aos-delay="300">
+                <span class="meta-badge"><i class="fas fa-calendar"></i> Date limite : 5/11/2025</span>
+                <span class="meta-badge"><i class="fas fa-graduation-cap"></i> BTS SIO SLAM — 2ᵉ année</span>
+                <span class="meta-badge"><i class="fas fa-laptop-code"></i> Projet académique</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <!-- Contexte -->
+                    <div class="content-card" data-aos="fade-up">
+                        <div class="card-title"><i class="fas fa-info-circle"></i> Contexte du projet</div>
+                        <p style="color:var(--text-secondary); line-height:1.8; margin-bottom:1rem;">
+                            Projet réalisé en équipe <strong>Scrum</strong> (binôme) dans le cadre du BTS SIO SLAM 2ᵉ année.
+                            L'objectif est de développer l'application back-office permettant au <strong>responsable d'une agence</strong>
+                            d'administrer les données de son agence de location de véhicules.
+                        </p>
+                        <p style="color:var(--text-secondary); line-height:1.8;">
+                            L'application est déployée dans chaque agence avec un accès à une base de données
+                            <strong>SqlServer centralisée</strong>, commune à toutes les agences. Outils de gestion de projet :
+                            <strong>Trello / Projeqtor</strong>, et éventuellement <strong>Github</strong>.
+                        </p>
+                    </div>
+
+                    <!-- BDD -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="50">
+                        <div class="card-title"><i class="fas fa-database"></i> Conception de la base de données</div>
+                        <p style="color:var(--text-secondary); line-height:1.8;">
+                            La base de données est conçue à partir du <strong>diagramme de classes</strong> fourni.
+                            Un script partiel est disponible ; la structure est complétée en créant les tables manquantes
+                            et les relations entre clés étrangères et clés primaires. Les données de test sont insérées manuellement.
+                        </p>
+                    </div>
+
+                    <!-- Normes -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-title"><i class="fas fa-ruler-combined"></i> Normes de développement</div>
+                        <ul class="task-list">
+                            <li>Programmation orientée objet avec <strong>Microsoft Visual Studio C#</strong> et le <strong>Framework Entity</strong></li>
+                            <li>Architecture <strong>MVC</strong></li>
+                            <li>Règles de nommage, commentaires, indentation</li>
+                            <li>Tests et intégration en continu</li>
+                        </ul>
+                    </div>
+
+                    <!-- User Stories -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="card-title"><i class="fas fa-list-check"></i> Fonctionnalités — User Stories SCRUM</div>
+                        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:var(--primary);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">1</span>
+                                    <strong style="color:var(--text-primary);font-size:0.9rem;">Connexion</strong>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Saisir l'identifiant et le mot de passe de l'agence sur le formulaire de connexion pour accéder à l'écran d'accueil.</p>
+                            </div>
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:var(--primary);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">2</span>
+                                    <strong style="color:var(--text-primary);font-size:0.9rem;">Modification des informations de l'agence</strong>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Modifier le nom, l'adresse, le téléphone de l'agence, et les heures d'ouverture pour chacun des 7 jours de la semaine.</p>
+                            </div>
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:var(--primary);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">3</span>
+                                    <strong style="color:var(--text-primary);font-size:0.9rem;">Gestion du parc de véhicules</strong>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Visualiser tous les véhicules de l'agence, filtrer par catégorie. En cliquant sur un véhicule, afficher la liste des attributs de sa catégorie.</p>
+                            </div>
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:var(--primary);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">4</span>
+                                    <strong style="color:var(--text-primary);font-size:0.9rem;">Ajout / suppression d'un véhicule</strong>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Ajouter un nouveau véhicule ou supprimer un véhicule existant.</p>
+                            </div>
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:var(--primary);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">5</span>
+                                    <strong style="color:var(--text-primary);font-size:0.9rem;">Gestion des fiches clients</strong>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Créer une nouvelle fiche client ou modifier la fiche (rue, cp, ville, téléphone, email) d'un client existant via son n° identifiant.</p>
+                            </div>
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:var(--primary);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">6</span>
+                                    <strong style="color:var(--text-primary);font-size:0.9rem;">Visualisation des contrats de location</strong>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Visualiser tous les contrats de location de l'agence avec tous les détails, avec filtre par date de début ou date de fin.</p>
+                            </div>
+                            <div style="background:rgba(100,116,139,0.05);border:1px solid rgba(100,116,139,0.15);border-radius:10px;padding:1rem;opacity:0.7;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:#94a3b8;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">7</span>
+                                    <strong style="color:var(--text-secondary);font-size:0.9rem;">Ajout d'un contrat de location</strong>
+                                    <span style="margin-left:auto;background:rgba(239,68,68,0.1);color:#ef4444;border-radius:20px;padding:0.15rem 0.6rem;font-size:0.75rem;font-weight:600;">Annulé</span>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Ajouter un nouveau contrat de location (datesignature, dateheuredebut, dateheurefin) pour un client sélectionné dans une liste.</p>
+                            </div>
+                            <div style="background:rgba(100,116,139,0.05);border:1px solid rgba(100,116,139,0.15);border-radius:10px;padding:1rem;opacity:0.7;">
+                                <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.35rem;">
+                                    <span style="background:#94a3b8;color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;">8</span>
+                                    <strong style="color:var(--text-secondary);font-size:0.9rem;">Modification d'un contrat</strong>
+                                    <span style="margin-left:auto;background:rgba(239,68,68,0.1);color:#ef4444;border-radius:20px;padding:0.15rem 0.6rem;font-size:0.75rem;font-weight:600;">Annulé</span>
+                                </div>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0;">Modifier un contrat lors du début (nbkmdebut) ou de la fin (nbkmfin, montantfacture) d'une location via le n° identifiant du contrat.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-title"><i class="fas fa-tools"></i> Technologies utilisées</div>
+                        <div>
+                            <span class="tech-badge"><i class="fas fa-code"></i> C#</span>
+                            <span class="tech-badge"><i class="fab fa-microsoft"></i> Visual Studio 2022</span>
+                            <span class="tech-badge"><i class="fas fa-database"></i> Entity Framework</span>
+                            <span class="tech-badge"><i class="fas fa-server"></i> SQL Server</span>
+                            <span class="tech-badge"><i class="fas fa-cubes"></i> POO / MVC</span>
+                        </div>
+                    </div>
+
+                    <!-- Bilan -->
+                    <div class="bilan-card" data-aos="fade-up" data-aos-delay="250">
+                        <h3><i class="fas fa-star me-2"></i>Bilan</h3>
+                        <p>
+                            Application back-office de gestion d'agence de location de véhicules, développée en binôme
+                            en mode agile SCRUM avec Visual Studio C# Entity Framework et SQL Server.
+                            6 User Stories réalisées sur 8 (US 7 et 8 annulées).
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="200">
+                        <div class="card-title"><i class="fas fa-trophy"></i> Compétences acquises</div>
+                        <div class="row g-2">
+                            <div class="col-6"><div class="competence-item"><i class="fas fa-code"></i><span>C#</span></div></div>
+                            <div class="col-6"><div class="competence-item"><i class="fas fa-database"></i><span>Entity Framework</span></div></div>
+                            <div class="col-6"><div class="competence-item"><i class="fas fa-server"></i><span>SQL Server</span></div></div>
+                            <div class="col-6"><div class="competence-item"><i class="fas fa-cubes"></i><span>POO / MVC</span></div></div>
+                            <div class="col-6"><div class="competence-item"><i class="fas fa-sync-alt"></i><span>SCRUM Agile</span></div></div>
+                            <div class="col-6"><div class="competence-item"><i class="fas fa-tasks"></i><span>Trello / Github</span></div></div>
+                        </div>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="300">
+                        <div class="card-title"><i class="fas fa-chart-bar"></i> Infos projet</div>
+                        <table style="width:100%; font-size:0.9rem; color:var(--text-secondary);">
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Type</td><td style="padding:0.6rem 0;">Projet académique</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Phase</td><td style="padding:0.6rem 0;">Phase 1 — App C# Entity</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Méthode</td><td style="padding:0.6rem 0;">SCRUM (équipe de 2)</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Date limite</td><td style="padding:0.6rem 0;">5/11/2025</td></tr>
+                            <tr><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Année</td><td style="padding:0.6rem 0;">BTS SIO — 2ᵉ année</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="400">
+                        <div class="card-title"><i class="fas fa-box-open"></i> Livrables</div>
+                        <ul class="task-list" style="font-size:0.85rem;">
+                            <li>Documentation PDF du projet</li>
+                            <li>Projet complet Visual Studio 2022 C# Entity</li>
+                            <li>Script SQL SqlServer (structure et données)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-footer">
+        <p>© 2025 <a href="index.html">Aymen Mallak</a> — Portfolio BTS SIO SLAM</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true });</script>
+</body>
+</html>
