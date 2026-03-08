@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certifications — Aymen Mallak</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1; --dark: #0f0f23; --light: #f8fafc; --light-gray: #e2e8f0;
+            --text-primary: #1e293b; --text-secondary: #475569;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1); --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --border-radius: 16px; --border-radius-lg: 24px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--text-primary); overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--light-gray); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+        .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--light-gray); padding: 1rem 0; box-shadow: var(--shadow-lg); }
+        .navbar-brand { font-weight: 700; font-size: 1.3rem; color: var(--text-primary) !important; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .navbar-brand::before { content: ""; width: 8px; height: 8px; background: var(--gradient-primary); border-radius: 50%; }
+        .btn-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; background: rgba(99,102,241,0.1); color: var(--primary); border: none; border-radius: 50px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; }
+        .btn-back:hover { background: var(--primary); color: white; transform: translateX(-3px); }
+        .project-hero { min-height: 45vh; background: var(--gradient-hero); display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
+        .project-hero::before { content: ""; position: absolute; inset: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100%25" height="100%25" fill="url(%23grid)"/></svg>'); opacity: 0.4; }
+        .hero-inner { position: relative; z-index: 2; color: white; padding: 3rem 0; }
+        .project-icon-big { width: 100px; height: 100px; background: rgba(255,255,255,0.2); border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; margin-bottom: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
+        .project-hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .project-hero .lead { opacity: 0.9; font-size: 1.1rem; max-width: 600px; }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .meta-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.15); padding: 0.4rem 0.9rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.2); }
+        .content-section { padding: 80px 0; }
+        .content-card { background: white; border-radius: var(--border-radius-lg); padding: 2.5rem; box-shadow: var(--shadow-xl); border: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .content-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-hero); }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.75rem; }
+        .card-title i { color: var(--primary); }
+        .page-footer { background: var(--dark); color: rgba(255,255,255,0.6); padding: 2rem 0; text-align: center; font-size: 0.9rem; }
+        .page-footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+
+        /* Cert card */
+        .cert-card { border-radius: var(--border-radius-lg); overflow: hidden; box-shadow: var(--shadow-xl); border: 1px solid rgba(0,0,0,0.06); transition: transform 0.3s ease; margin-bottom: 2rem; }
+        .cert-card:hover { transform: translateY(-4px); }
+        .cert-header { padding: 1.75rem 2rem; display: flex; align-items: center; gap: 1.25rem; }
+        .cert-logo { width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: white; flex-shrink: 0; }
+        .cert-header-info h3 { font-size: 1.15rem; font-weight: 700; margin: 0 0 0.2rem; }
+        .cert-header-info p { font-size: 0.85rem; margin: 0; opacity: 0.85; }
+        .cert-body { padding: 1.5rem 2rem; background: white; }
+        .cert-body p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1rem; }
+        .cert-meta { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-bottom: 1.25rem; }
+        .cert-badge { display: inline-flex; align-items: center; gap: 0.35rem; background: rgba(99,102,241,0.07); color: var(--primary); border: 1px solid rgba(99,102,241,0.18); border-radius: 50px; padding: 0.3rem 0.8rem; font-size: 0.8rem; font-weight: 600; }
+        .btn-download { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.4rem; border-radius: 50px; font-weight: 600; font-size: 0.88rem; text-decoration: none; transition: all 0.3s ease; border: none; cursor: pointer; }
+        .btn-download.active { background: var(--gradient-primary); color: white; }
+        .btn-download.active:hover { opacity: 0.88; transform: translateY(-2px); }
+        .btn-download.disabled { background: rgba(100,116,139,0.1); color: #94a3b8; cursor: not-allowed; border: 1px dashed #cbd5e1; }
+        .score-badge { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; width: 80px; height: 80px; border-radius: 50%; border: 3px solid #f59e0b; background: rgba(245,158,11,0.06); margin-left: auto; flex-shrink: 0; }
+        .score-badge .score-num { font-size: 1.4rem; font-weight: 800; color: #d97706; line-height: 1; }
+        .score-badge .score-total { font-size: 0.72rem; color: #94a3b8; }
+        .niveau-pill { display: inline-block; background: #7c3aed; color: white; border-radius: 50px; padding: 0.25rem 0.9rem; font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .coming-soon { background: rgba(100,116,139,0.05); border: 2px dashed #cbd5e1; border-radius: var(--border-radius-lg); padding: 2rem; display: flex; align-items: center; gap: 1.25rem; margin-bottom: 2rem; }
+        .coming-soon i { font-size: 2rem; color: #cbd5e1; flex-shrink: 0; }
+        .coming-soon h4 { font-size: 1rem; font-weight: 700; color: var(--text-secondary); margin: 0 0 0.25rem; }
+        .coming-soon p { font-size: 0.85rem; color: #94a3b8; margin: 0; }
+
+        @media (max-width: 768px) { .content-section { padding: 50px 0; } .cert-header { flex-wrap: wrap; } .content-card { padding: 1.5rem; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href="index.html">Aymen Mallak</a>
+            <a href="index.html#certifications" class="btn-back"><i class="fas fa-arrow-left"></i> Retour</a>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="container hero-inner">
+            <div class="project-icon-big" data-aos="fade-right"><i class="fas fa-certificate"></i></div>
+            <h1 data-aos="fade-up" data-aos-delay="100">Certifications & Travail personnel</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="200">
+                Certifications obtenues dans le cadre du BTS SIO SLAM et du développement professionnel.
+            </p>
+            <div class="hero-meta" data-aos="fade-up" data-aos-delay="300">
+                <span class="meta-badge"><i class="fas fa-check-circle"></i> 1 certificat obtenu</span>
+                <span class="meta-badge"><i class="fas fa-clock"></i> 2 à venir</span>
+                <span class="meta-badge"><i class="fas fa-graduation-cap"></i> BTS SIO SLAM</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+
+            <!-- PIX -->
+            <div data-aos="fade-up">
+                <div class="cert-card">
+                    <div class="cert-header" style="background: linear-gradient(135deg, #6d28d9, #7c3aed); color:white;">
+                        <div class="cert-logo" style="background:rgba(255,255,255,0.15);">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="cert-header-info">
+                            <h3>Certification PIX</h3>
+                            <p>GIP Pix — Lycée Lamartine — 12/01/2026</p>
+                        </div>
+                        <div class="score-badge" style="margin-left:auto;">
+                            <span class="score-num">517</span>
+                            <span class="score-total">/ 895</span>
+                        </div>
+                    </div>
+                    <div class="cert-body">
+                        <div class="niveau-pill">Avancé 1</div>
+                        <p>
+                            La certification Pix évalue les compétences numériques sur 5 domaines : information et données,
+                            communication et collaboration, création de contenu numérique, protection et sécurité, environnement numérique.
+                        </p>
+                        <p>
+                            Le niveau <strong>Avancé 1</strong> (517/895 pix) signifie des pratiques numériques avancées et des connaissances solides
+                            permettant de faire face seul à des situations nouvelles, et de venir en aide à d'autres personnes.
+                        </p>
+                        <div class="cert-meta">
+                            <span class="cert-badge"><i class="fas fa-calendar"></i> 12 janvier 2026</span>
+                            <span class="cert-badge"><i class="fas fa-map-marker-alt"></i> Lycée Lamartine</span>
+                            <span class="cert-badge"><i class="fas fa-hashtag"></i> P-7QKX4R3R</span>
+                        </div>
+                        <a href="certification-pix.pdf" download class="btn-download active">
+                            <i class="fas fa-download"></i> Télécharger le certificat PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CNIL -->
+            <div data-aos="fade-up" data-aos-delay="100">
+                <div class="coming-soon">
+                    <i class="fas fa-shield-alt"></i>
+                    <div style="flex:1;">
+                        <h4>Certificat CNIL — Protection des données personnelles</h4>
+                        <p>Certification relative au RGPD et à la protection des données personnelles — à venir.</p>
+                    </div>
+                    <a class="btn-download disabled">
+                        <i class="fas fa-download"></i> Non disponible
+                    </a>
+                </div>
+            </div>
+
+            <!-- ANSSI -->
+            <div data-aos="fade-up" data-aos-delay="150">
+                <div class="coming-soon">
+                    <i class="fas fa-lock"></i>
+                    <div style="flex:1;">
+                        <h4>Certificat ANSSI — Cybersécurité</h4>
+                        <p>Certification SecNumAcadémie de l'Agence nationale de la sécurité des systèmes d'information — à venir.</p>
+                    </div>
+                    <a class="btn-download disabled">
+                        <i class="fas fa-download"></i> Non disponible
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="page-footer">
+        <p>© 2025 <a href="index.html">Aymen Mallak</a> — Portfolio BTS SIO SLAM</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true });</script>
+</body>
+</html>
