@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veille Technologique — Aymen Mallak</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1; --dark: #0f0f23; --light: #f8fafc; --light-gray: #e2e8f0;
+            --text-primary: #1e293b; --text-secondary: #475569;
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1); --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
+            --border-radius: 16px; --border-radius-lg: 24px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--light); color: var(--text-primary); overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--light-gray); }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+
+        .navbar { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--light-gray); padding: 1rem 0; box-shadow: var(--shadow-lg); }
+        .navbar-brand { font-weight: 700; font-size: 1.3rem; color: var(--text-primary) !important; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+        .navbar-brand::before { content: ""; width: 8px; height: 8px; background: var(--gradient-primary); border-radius: 50%; }
+        .btn-back { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.25rem; background: rgba(99,102,241,0.1); color: var(--primary); border: none; border-radius: 50px; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.3s ease; }
+        .btn-back:hover { background: var(--primary); color: white; transform: translateX(-3px); }
+
+        .project-hero { min-height: 55vh; background: var(--gradient-hero); display: flex; align-items: center; position: relative; overflow: hidden; padding-top: 80px; }
+        .project-hero::before { content: ""; position: absolute; inset: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100%25" height="100%25" fill="url(%23grid)"/></svg>'); opacity: 0.4; }
+        .hero-inner { position: relative; z-index: 2; color: white; padding: 3rem 0; }
+        .project-icon-big { width: 100px; height: 100px; background: rgba(255,255,255,0.2); border-radius: 28px; display: flex; align-items: center; justify-content: center; font-size: 2.8rem; color: white; margin-bottom: 1.5rem; backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.3); }
+        .project-hero h1 { font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 800; margin-bottom: 1rem; }
+        .project-hero .lead { opacity: 0.9; font-size: 1.1rem; max-width: 600px; }
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.5rem; }
+        .meta-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,255,255,0.15); padding: 0.4rem 0.9rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.2); }
+
+        .content-section { padding: 80px 0; }
+        .content-card { background: white; border-radius: var(--border-radius-lg); padding: 2.5rem; box-shadow: var(--shadow-xl); border: 1px solid rgba(0,0,0,0.05); margin-bottom: 2rem; position: relative; overflow: hidden; }
+        .content-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient-hero); }
+        .card-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--text-primary); display: flex; align-items: center; gap: 0.75rem; }
+        .card-title i { color: var(--primary); }
+        .tech-badge { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 600; margin: 0.25rem; background: rgba(99,102,241,0.08); color: var(--primary); border: 1px solid rgba(99,102,241,0.2); }
+        .task-list { list-style: none; padding: 0; }
+        .task-list li { padding: 0.75rem 0; border-bottom: 1px solid var(--light-gray); display: flex; align-items: flex-start; gap: 0.75rem; color: var(--text-secondary); font-size: 0.95rem; }
+        .task-list li:last-child { border-bottom: none; }
+        .task-list li::before { content: ""; width: 8px; height: 8px; background: var(--primary); border-radius: 50%; margin-top: 0.4rem; flex-shrink: 0; }
+        .competence-item { background: rgba(99,102,241,0.05); padding: 1.25rem; border-radius: var(--border-radius); border: 1px solid rgba(99,102,241,0.1); text-align: center; transition: all 0.3s ease; margin-bottom: 0.75rem; }
+        .competence-item:hover { background: rgba(99,102,241,0.12); transform: translateY(-3px); }
+        .competence-item i { font-size: 1.8rem; color: var(--primary); margin-bottom: 0.5rem; display: block; }
+        .competence-item span { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+        .bilan-card { background: var(--gradient-hero); color: white; border-radius: var(--border-radius-lg); padding: 2.5rem; margin-bottom: 2rem; }
+        .bilan-card h3 { font-weight: 700; margin-bottom: 1rem; }
+        .bilan-card p { opacity: 0.9; line-height: 1.7; }
+        .page-footer { background: var(--dark); color: rgba(255,255,255,0.6); padding: 2rem 0; text-align: center; font-size: 0.9rem; }
+        .page-footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
+        .page-footer a:hover { color: white; }
+
+        /* Arbre de veille */
+        .tree-container { background: #1e293b; border-radius: var(--border-radius); padding: 2rem; overflow-x: auto; }
+        .tree { display: flex; flex-direction: column; align-items: center; }
+        .tree-root { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 1rem 2rem; border-radius: 12px; font-weight: 700; font-size: 1rem; text-align: center; position: relative; margin-bottom: 2rem; }
+        .tree-root::after { content: ""; position: absolute; bottom: -1rem; left: 50%; transform: translateX(-50%); width: 2px; height: 1rem; background: rgba(255,255,255,0.3); }
+        .tree-branches { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; position: relative; }
+        .tree-branches::before { content: ""; position: absolute; top: -1rem; left: 10%; right: 10%; height: 2px; background: rgba(255,255,255,0.15); }
+        .tree-branch { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; min-width: 180px; position: relative; }
+        .tree-branch::before { content: ""; position: absolute; top: -1rem; left: 50%; transform: translateX(-50%); width: 2px; height: 1rem; background: rgba(255,255,255,0.2); }
+        .branch-title { background: rgba(99,102,241,0.4); border: 1px solid rgba(99,102,241,0.6); color: white; padding: 0.6rem 1rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-align: center; width: 100%; }
+        .branch-items { display: flex; flex-direction: column; gap: 0.4rem; width: 100%; }
+        .branch-item { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.78rem; text-align: center; font-style: italic; }
+
+        /* Etapes méthode */
+        .etape { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1rem 0; border-bottom: 1px solid var(--light-gray); }
+        .etape:last-child { border-bottom: none; }
+        .etape-num { width: 36px; height: 36px; background: var(--gradient-primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem; flex-shrink: 0; margin-top: 0.1rem; }
+        .etape-content strong { color: var(--text-primary); display: block; margin-bottom: 0.2rem; font-size: 0.95rem; }
+        .etape-content p { color: var(--text-secondary); font-size: 0.88rem; margin: 0; line-height: 1.6; }
+
+        /* Placeholder articles */
+        .articles-placeholder { background: rgba(99,102,241,0.04); border: 2px dashed rgba(99,102,241,0.25); border-radius: var(--border-radius); padding: 2rem; text-align: center; }
+        .articles-placeholder i { font-size: 2.5rem; color: rgba(99,102,241,0.3); margin-bottom: 1rem; display: block; }
+        .articles-placeholder p { color: var(--text-secondary); margin: 0; font-size: 0.95rem; }
+
+        @media (max-width: 768px) { .content-section { padding: 50px 0; } .content-card { padding: 1.5rem; } .tree-branches { gap: 1rem; } .tree-branch { min-width: 140px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href="index.html">Aymen Mallak</a>
+            <a href="index.html#projects" class="btn-back"><i class="fas fa-arrow-left"></i> Retour aux projets</a>
+        </div>
+    </nav>
+
+    <section class="project-hero">
+        <div class="container hero-inner">
+            <div class="project-icon-big" data-aos="fade-right"><i class="fas fa-satellite-dish"></i></div>
+            <h1 data-aos="fade-up" data-aos-delay="100">Veille Technologique</h1>
+            <p class="lead" data-aos="fade-up" data-aos-delay="200">
+                Les chatbots IA au service des entreprises — collecte, tri et analyse des tendances du secteur.
+            </p>
+            <div class="hero-meta" data-aos="fade-up" data-aos-delay="300">
+                <span class="meta-badge"><i class="fas fa-calendar"></i> Période : dernier trimestre 2026</span>
+                <span class="meta-badge"><i class="fas fa-robot"></i> Sujet : Chatbots IA & service client</span>
+                <span class="meta-badge"><i class="fas fa-newspaper"></i> 16 articles sélectionnés</span>
+                <span class="meta-badge"><i class="fas fa-graduation-cap"></i> BTS SIO SLAM — 2ᵉ année</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <!-- Méthode -->
+                    <div class="content-card" data-aos="fade-up">
+                        <div class="card-title"><i class="fas fa-cogs"></i> 1. Méthode de mise en place de la veille</div>
+                        <p style="color:var(--text-secondary);line-height:1.8;margin-bottom:1.5rem;">
+                            La veille technologique repose sur <strong>trois étapes indissociables</strong> : collecter, trier/analyser, diffuser.
+                            J'ai structuré ma démarche autour du sujet des <strong>chatbots IA appliqués au service client des entreprises</strong>,
+                            en suivant la méthode Feedly décrite ci-dessous.
+                        </p>
+                        <div class="etape">
+                            <div class="etape-num">1</div>
+                            <div class="etape-content">
+                                <strong>Sujet de veille choisi</strong>
+                                <p>Les chatbots IA et leur adoption dans le service client des entreprises : fonctionnement technique (NLP, LLM, intégration CRM), avantages, limites, enjeux éthiques et tendances du marché.</p>
+                            </div>
+                        </div>
+                        <div class="etape">
+                            <div class="etape-num">2</div>
+                            <div class="etape-content">
+                                <strong>Outil utilisé : Feedly (flux RSS)</strong>
+                                <p>J'utilise Feedly pour agréger automatiquement les articles issus de sources spécialisées. J'ai limité le nombre de sources (qualité > quantité) pour éviter la surcharge d'informations inutile.</p>
+                            </div>
+                        </div>
+                        <div class="etape">
+                            <div class="etape-num">3</div>
+                            <div class="etape-content">
+                                <strong>Type de sources suivies</strong>
+                                <p>Presse informatique et sites spécialisés dans l'IA et la transformation numérique des entreprises : mister-ia.com, hubspot.fr, dydu.ai, freshworks.com, botpress.com, zendesk.fr, bpifrance, cogitalk.ai, rezoactif.com, apizee.com. Les blogs personnels, contenus purement commerciaux ou publicitaires ont été écartés.</p>
+                            </div>
+                        </div>
+                        <div class="etape">
+                            <div class="etape-num">4</div>
+                            <div class="etape-content">
+                                <strong>Période de veille retenue</strong>
+                                <p>Le dernier trimestre (janvier → mars 2026). Les articles antérieurs à cette période ne sont pas traités : la veille n'est pas rétroactive. Feedly a été filtré par date pour ne conserver que les publications récentes.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestion et tri -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="50">
+                        <div class="card-title"><i class="fas fa-filter"></i> 2. Gestion, tri et diffusion de la veille</div>
+                        <p style="color:var(--text-secondary);font-size:0.92rem;margin-bottom:1.2rem;line-height:1.7;">Voici comment j'ai sélectionné, organisé et partagé les informations collectées.</p>
+
+                        <div style="font-weight:700;color:var(--text-primary);font-size:0.95rem;margin-bottom:0.75rem;"><i class="fas fa-search" style="color:var(--primary);margin-right:0.5rem;"></i>Tri des articles</div>
+                        <ul class="task-list" style="margin-bottom:1.5rem;">
+                            <li>Lecture rapide des titres et résumés dans Feedly pour écarter les articles hors sujet</li>
+                            <li>Élimination des doublons et des contenus trop courts, commerciaux ou publicitaires</li>
+                            <li>Conservation uniquement des articles apportant une information nouvelle et exploitable</li>
+                            <li>Classement par thématique : <strong>⚙️ Fonctionnement technique</strong> et <strong>🏢 Adoption par les entreprises</strong></li>
+                        </ul>
+
+                        <div style="font-weight:700;color:var(--text-primary);font-size:0.95rem;margin-bottom:0.75rem;"><i class="fas fa-microscope" style="color:var(--primary);margin-right:0.5rem;"></i>Analyse de chaque article retenu</div>
+                        <ul class="task-list" style="margin-bottom:1.5rem;">
+                            <li><strong>De quoi parle cet article ?</strong> — Identification du sujet précis</li>
+                            <li><strong>Quelle tendance met-il en évidence ?</strong> — NLP, LLM, adoption, éthique, marché…</li>
+                            <li><strong>Pourquoi cette information est-elle importante aujourd'hui ?</strong> — Pertinence pour le secteur</li>
+                            <li><strong>Quel impact pour les entreprises et les métiers informatiques ?</strong> — Lien avec le métier de développeur SLAM</li>
+                        </ul>
+
+                        <div style="font-weight:700;color:var(--text-primary);font-size:0.95rem;margin-bottom:0.75rem;"><i class="fas fa-share-alt" style="color:var(--primary);margin-right:0.5rem;"></i>Diffusion</div>
+                        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:10px;padding:0.9rem;font-size:0.88rem;color:var(--text-secondary);">
+                                <strong style="color:var(--text-primary);">À qui ?</strong> — Équipe de classe BTS SIO, enseignants, professionnels du secteur informatique
+                            </div>
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:10px;padding:0.9rem;font-size:0.88rem;color:var(--text-secondary);">
+                                <strong style="color:var(--text-primary);">Sous quelle forme ?</strong> — Portfolio structuré (cette page), document de synthèse, partage sur LinkedIn
+                            </div>
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.15);border-radius:10px;padding:0.9rem;font-size:0.88rem;color:var(--text-secondary);">
+                                <strong style="color:var(--text-primary);">Via quel canal ?</strong> — Portfolio BTS SIO SLAM (public), espace de classe sur lEclat, LinkedIn
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Plan de veille / arbre -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-title"><i class="fas fa-sitemap"></i> 3. Plan de veille — Arbre thématique</div>
+                        <div class="tree-container">
+                            <div class="tree">
+                                <div class="tree-root">🤖 Chatbots IA & Service Client</div>
+                                <div class="tree-branches">
+                                    <div class="tree-branch">
+                                        <div class="branch-title">⚙️ Fonctionnement technique</div>
+                                        <div class="branch-items">
+                                            <div class="branch-item">NLP / LLM / IA générative</div>
+                                            <div class="branch-item">Intégration API / CRM</div>
+                                            <div class="branch-item">Éthique & transparence</div>
+                                            <div class="branch-item">Limites des agents IA</div>
+                                            <div class="branch-item">IA agentique 2026</div>
+                                            <div class="branch-item">→ Art. 1, 2, 3, 5, 7, 11, 14, 16</div>
+                                        </div>
+                                    </div>
+                                    <div class="tree-branch">
+                                        <div class="branch-title">🏢 Adoption par les entreprises</div>
+                                        <div class="branch-items">
+                                            <div class="branch-item">Cas d'usage concrets</div>
+                                            <div class="branch-item">ROI & statistiques marché</div>
+                                            <div class="branch-item">Secteurs pionniers</div>
+                                            <div class="branch-item">TPE / PME & no-code</div>
+                                            <div class="branch-item">Tendances 2025-2026</div>
+                                            <div class="branch-item">→ Art. 4, 6, 8, 9, 10, 12, 13, 15</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p style="color:var(--text-secondary);font-size:0.82rem;margin-top:1rem;text-align:center;font-style:italic;">8 articles dans la branche technique · 8 articles dans la branche adoption — 16 articles au total</p>
+                    </div>
+
+                    <!-- Articles sélectionnés -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="card-title"><i class="fas fa-newspaper"></i> 4. Articles sélectionnés <span style="font-size:0.85rem;font-weight:500;color:var(--text-secondary);margin-left:0.5rem;">(16 articles — ordre chronologique)</span></div>
+
+                        <!-- Style articles -->
+                        <style>
+                            .article-item { border: 1px solid var(--light-gray); border-radius: 14px; padding: 1.25rem 1.4rem; margin-bottom: 1rem; transition: all 0.25s ease; position: relative; overflow: hidden; }
+                            .article-item::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--gradient-primary); }
+                            .article-item:hover { box-shadow: var(--shadow-lg); transform: translateX(3px); }
+                            .article-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: var(--gradient-primary); color: white; border-radius: 50%; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
+                            .article-meta { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+                            .article-date { font-size: 0.78rem; color: #94a3b8; font-weight: 500; }
+                            .article-source { font-size: 0.78rem; font-weight: 700; color: var(--primary); background: rgba(99,102,241,0.08); padding: 0.15rem 0.6rem; border-radius: 50px; border: 1px solid rgba(99,102,241,0.18); }
+                            .article-theme { font-size: 0.75rem; font-weight: 600; padding: 0.15rem 0.6rem; border-radius: 50px; }
+                            .theme-tech { background: rgba(16,185,129,0.1); color: #047857; border: 1px solid rgba(16,185,129,0.2); }
+                            .theme-adoption { background: rgba(245,158,11,0.1); color: #92400e; border: 1px solid rgba(245,158,11,0.2); }
+                            .article-title { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.4rem; }
+                            .article-title a { color: inherit; text-decoration: none; }
+                            .article-title a:hover { color: var(--primary); text-decoration: underline; }
+                            .article-synthese { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.65; margin: 0 0 0.75rem; }
+                            .article-justif { font-size: 0.82rem; background: rgba(99,102,241,0.06); border-left: 3px solid var(--primary); padding: 0.5rem 0.8rem; border-radius: 0 8px 8px 0; color: var(--text-secondary); margin: 0; }
+                            .article-justif strong { color: var(--primary); }
+                        </style>
+
+                        <!-- Article 1 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">1</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Mars 2025</span>
+                                <span class="article-source">iandyoo.com</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.iandyoo.com/transparence-des-chatbots-en-marketing-attentes-des-clients-et-ethique-ia/" target="_blank">Comment la transparence des chatbots améliore l'éthique en marketing et répond aux attentes des clients <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Cet article met en lumière l'enjeu croissant de la transparence dans l'utilisation des chatbots IA en marketing. Il explique que 62 % des consommateurs exigent une transparence accrue autour de l'IA, et que les règlements comme le RGPD imposent aux entreprises d'informer clairement les utilisateurs lorsqu'ils interagissent avec une machine et non un humain. La distinction humain/IA devient un pilier fondamental de la confiance client.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Apporte une dimension juridique et éthique essentielle, directement liée au métier de développeur qui intègre des chatbots dans des applications.</p>
+                        </div>
+
+                        <!-- Article 2 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">2</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Avril 2025</span>
+                                <span class="article-source">freshworks.com</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.freshworks.com/fr/chatbots/customer-service/" target="_blank">Les 15 meilleurs chatbots pour service client basés sur l'IA en 2025 <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Freshworks dresse un panorama des meilleures solutions de chatbots IA disponibles pour le service client. L'article met en avant les critères de sélection essentiels : support omnicanal, intégration CRM, traitement du langage naturel (TALN) et personnalisation. Il souligne que les chatbots modernes ne suivent plus des scripts prédéfinis mais utilisent des algorithmes NLP pour interpréter le contexte et le langage humain de façon conversationnelle.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Source professionnelle reconnue (Freshworks, éditeur CRM/ITSM). Donne une vision concrète des outils du marché et de leurs capacités techniques — utile pour comprendre les enjeux d'intégration via API.</p>
+                        </div>
+
+                        <!-- Article 3 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">3</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Mai 2025</span>
+                                <span class="article-source">airagent.fr</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://airagent.fr/guide/limites-agents-ia-conversationnels/" target="_blank">Les limites des agents IA conversationnels en 2025 <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Cet article analyse en profondeur les limites actuelles des agents conversationnels IA : incompréhensions contextuelles, incapacité à gérer les émotions complexes, réponses biaisées et enjeux de sécurité. Malgré les progrès des LLM, la gestion des nuances émotionnelles reste perfectible en 2025. L'auteur insiste sur l'importance d'audits éthiques réguliers et d'une formation continue des équipes pour limiter ces imperfections structurelles.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Indispensable pour équilibrer la veille : comprendre les limites techniques des chatbots est aussi important que leurs avantages. Met en évidence des défis concrets pour les développeurs.</p>
+                        </div>
+
+                        <!-- Article 4 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">4</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Juin 2025</span>
+                                <span class="article-source">dydu.ai</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.dydu.ai/infographie-ia-et-chatbots-quelles-tendances-pour-2025/" target="_blank">[Infographie] IA et chatbots : quelles tendances pour 2025 ? <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Dydu, leader français de l'IA conversationnelle, publie une infographie chiffrée sur l'évolution du marché. Les données sont frappantes : 987 millions de personnes utilisent des chatbots, 82 % des consommateurs préfèrent interagir avec un chatbot plutôt qu'attendre un agent humain, et le marché des chatbots devrait atteindre 47,1 milliards de dollars d'ici 2030. En France, 81 % des entreprises prévoient d'augmenter leurs investissements dans l'IA.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Source française spécialisée en IA conversationnelle. Les données chiffrées donnent une vision claire de l'ampleur du phénomène et de son impact sur le marché français.</p>
+                        </div>
+
+                        <!-- Article 5 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">5</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Juillet 2025</span>
+                                <span class="article-source">cnil.fr</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.cnil.fr/fr/ia-finalisation-recommandations-developpement-des-systemes-ia" target="_blank">La CNIL finalise ses recommandations sur le développement des systèmes d'IA <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">La CNIL publie ses recommandations finales sur l'application du RGPD au développement de systèmes d'IA, en réponse à l'essor des LLM et des chatbots. Elle précise les obligations des concepteurs (base légale, anonymisation, sécurité des données d'entraînement) et annonce un outil de traçabilité des modèles open source. Elle lance également le projet PANAME avec l'ANSSI pour auditer les modèles IA et vérifier s'ils traitent des données personnelles. Ces recommandations s'articulent avec le règlement européen sur l'IA (AI Act) entré en vigueur en 2024.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Source officielle et institutionnelle (CNIL). Indispensable pour tout développeur : les obligations RGPD et AI Act s'appliquent dès la conception d'un chatbot ou d'un système IA intégré dans une application.</p>
+                        </div>
+
+                        <!-- Article 6 (ex-5) -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">6</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Juin 2025</span>
+                                <span class="article-source">merci-app.com</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.merci-app.com/article/top-10-des-chatbots-ia-pour-transformer-votre-service-client-en-2025" target="_blank">Top 10 des chatbots IA pour transformer votre service client en 2025 <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">MerciApp présente une sélection des dix meilleures solutions de chatbots du marché, évaluées selon des critères précis : rapport qualité-prix, adoption du marché, accessibilité et transparence. L'article met en avant des outils comme Tidio (capable d'automatiser jusqu'à 64 % des conversations en 12 langues), Freshdesk Freddy AI, ou encore des solutions CRM intégrées à HubSpot, illustrant la diversité des offres disponibles pour les entreprises.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Offre une comparaison structurée et objective d'outils concrets. Aide à comprendre la diversité du marché et les critères de choix d'une solution pour une entreprise.</p>
+                        </div>
+
+                        <!-- Article 6 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">7</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Août 2025</span>
+                                <span class="article-source">mister-ia.com</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.mister-ia.com/article/service-client-chatbot-ia" target="_blank">Service client et IA : comparatif de 8 chatbots pour améliorer la satisfaction client <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Mister IA dresse un comparatif détaillé de 8 solutions de chatbots IA pour le service client, en distinguant les chatbots à règles (scénarios prédéfinis) des chatbots IA utilisant le NLP et le machine learning. L'article cite une étude Zendesk selon laquelle plus de 60 % des clients s'attendent à un service disponible 24h/24, confirmant le rôle stratégique des chatbots pour répondre à cette exigence de disponibilité permanente.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Distingue clairement chatbots à règles et chatbots IA — une différence fondamentale souvent mal comprise. Chiffres Zendesk appuient l'importance de la disponibilité 24h/24.</p>
+                        </div>
+
+                        <!-- Article 7 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">8</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Septembre 2025</span>
+                                <span class="article-source">cogitalk.ai</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://cogitalk.ai/ethique-des-chatbots-ia-les-7-grands-defis-a-relever/" target="_blank">Éthique des chatbots IA : les 7 grands défis à relever <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Cogitalk recense les sept défis éthiques majeurs liés au déploiement des chatbots IA : transparence de l'identité (humain vs machine), protection des données personnelles, biais algorithmiques issus de données d'entraînement déséquilibrées, cybersécurité, responsabilité juridique en cas d'erreur, déshumanisation de la relation client et risques de manipulation. L'article souligne que tout chatbot doit obligatoirement s'identifier comme tel dès le début de la conversation.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Aborde les 7 défis éthiques de façon structurée. Essentiel pour un développeur SLAM qui doit anticiper les risques lors de l'intégration d'une solution IA dans une application.</p>
+                        </div>
+
+                        <!-- Article 8 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">9</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Octobre 2025</span>
+                                <span class="article-source">bigmedia.bpifrance.fr</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://bigmedia.bpifrance.fr/nos-dossiers/chatbots-pour-tpe-ameliorer-le-service-client-avec-lia-conversationnelle" target="_blank">Chatbots pour TPE : améliorer le service client avec l'IA conversationnelle <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">BpiFrance Big Media montre que les chatbots IA, longtemps réservés aux grands groupes, s'invitent désormais dans les très petites entreprises françaises. La démocratisation des plateformes no-code et l'intégration de modèles comme GPT permettent aux TPE d'automatiser les interactions répétitives (horaires, devis, prises de rendez-vous). Selon HubSpot France, plus de 60 % des consommateurs se disent prêts à échanger avec un chatbot pour obtenir une réponse rapide.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Source institutionnelle (BpiFrance). Montre que la tendance chatbot IA touche désormais toutes les tailles d'entreprises, y compris les plus petites — une tendance directement liée aux missions de développeur en PME/TPE.</p>
+                        </div>
+
+                        <!-- Article 9 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">10</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Octobre 2025</span>
+                                <span class="article-source">edesk.com</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.edesk.com/fr/blog/15-grands-exemples-dia-dans-le-service-a-la-clientele/" target="_blank">15 grands exemples d'IA dans le service client en 2025 <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">eDesk illustre concrètement l'IA dans le service client avec 15 exemples réels : H&M et Sephora utilisent des chatbots pour traiter les demandes courantes, Microsoft et IBM proposent des portails self-service pilotés par l'IA, et des entreprises recourent à l'IA générative pour maintenir une voix de marque cohérente. L'article montre aussi le support prédictif comme l'une des applications les plus prometteuses, anticipant les problèmes avant que les clients ne les signalent.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Exemples réels de grands groupes (H&M, Sephora, IBM) qui ancrent la veille dans des cas concrets mesurables — montre les bénéfices pratiques de l'IA dans le service client.</p>
+                        </div>
+
+                        <!-- Article 10 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">11</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Décembre 2025</span>
+                                <span class="article-source">respond.io</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://respond.io/fr/blog/best-ai-chatbot-for-customer-service" target="_blank">7 meilleurs chatbots IA pour le service client en 2025 <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Respond.io analyse l'évolution des chatbots IA, passant de simples robots FAQ à de véritables équipiers capables de comprendre l'intention, de résoudre des problèmes complexes et de savoir quand escalader vers un agent humain. L'article rappelle que 80 % des clients estiment que leur expérience avec une entreprise est aussi importante que ses produits, et que d'ici 2025, 89 % des entreprises se différencieront par l'expérience client plutôt que par le prix.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Met en évidence l'évolution majeure du chatbot (de FAQ basique à vrai agent IA). La notion d'escalade vers un humain est un enjeu technique clé pour les développeurs.</p>
+                        </div>
+
+                        <!-- Article 11 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">12</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Décembre 2025</span>
+                                <span class="article-source">botsaas.io</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.botsaas.io/fr/ai-chatbot-statistics/" target="_blank">Statistiques et tendances des chatbots IA 2025 — Données de marché et impact commercial <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">BotSaaS compile les statistiques clés du marché des chatbots IA en 2025 : marché mondial dépassant 15 milliards de dollars, 80 % des entreprises utilisant des chatbots, augmentation moyenne du taux de conversion de 25 %, et automatisation de 70 % des demandes d'assistance répétitives. Ces chiffres illustrent le passage du chatbot de gadget technologique à véritable levier stratégique de croissance pour les entreprises.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Données chiffrées précises et récentes sur l'impact business des chatbots — utile pour argumenter la pertinence du sujet auprès d'une entreprise ou d'un jury.</p>
+                        </div>
+
+                        <!-- Article 12 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">13</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Janvier 2026</span>
+                                <span class="article-source">hubspot.fr</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.hubspot.fr/statistiques-intelligence-artificielle" target="_blank">Les statistiques IA à connaître en 2025 — HubSpot <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">HubSpot publie un panorama statistique complet sur l'adoption de l'IA en entreprise. Pour le service client : 72 % des équipes utilisent régulièrement l'IA pour répondre aux demandes, 53 % arrivent à fournir un service 24/7 grâce à l'IA, et 41 % des entreprises prévoient d'investir dans des agents IA (chatbots) pour automatiser le traitement des demandes. Ces données montrent une adoption massive, mais aussi que l'IA reste un outil complémentaire aux équipes humaines.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> HubSpot est une référence mondiale du CRM et du marketing. Ses statistiques sont fiables et très citées — elles confirment l'adoption massive de l'IA dans le service client en 2025.</p>
+                        </div>
+
+                        <!-- Article 13 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">14</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Janvier 2026</span>
+                                <span class="article-source">dialonce.ai</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://dialonce.ai/fr/blog-ia/tendances/relation-client-2026-ia-indispensable.html" target="_blank">Relation client 2026 : pourquoi l'IA devient indispensable ? <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">DialOnce explique le passage du chatbot scriptique à l'agent IA conversationnel : on quitte l'arbre de décision figé pour une compréhension réelle du langage naturel grâce au NLP et aux LLM. L'article décrit les nouvelles attentes des clients (immédiateté, multicanal, personnalisation) et analyse l'essor de l'IA vocale, qui corrige les limites des anciens SVI. Selon leur baromètre, 75 % des Français préfèrent d'abord tenter de résoudre leur demande seuls avant de contacter un conseiller.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Explique clairement le saut technologique NLP/LLM vs arbre de décision — une évolution fondamentale à comprendre pour un développeur qui conçoit des interfaces conversationnelles.</p>
+                        </div>
+
+                        <!-- Article 14 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">15</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Février 2026</span>
+                                <span class="article-source">apizee.com</span>
+                                <span class="article-theme theme-adoption">🏢 Adoption entreprises</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.apizee.com/fr/tendances-relation-client.php" target="_blank">Relation client : les tendances à ne pas manquer en 2026 <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Apizee dresse un bilan 2025 et ouvre les perspectives 2026 : l'IA agentique remplace l'IA traditionnelle, avec un marché attendu à 93,2 milliards de dollars d'ici 2032. Cisco prévoit que 68 % des interactions de service client seront gérées de bout en bout par l'IA agentique d'ici 2028. L'article soulève aussi la tension humain/IA : 90 % des clients préféreraient attendre pour parler à un humain, et 87 % estiment qu'aucune IA ne pourra remplacer l'aide humaine.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Aborde la tension clé humain vs IA et introduit l'IA agentique comme prochaine évolution. Prévisions Cisco et Gartner crédibilisent l'analyse et donnent une vision prospective indispensable.</p>
+                        </div>
+
+                        <!-- Article 15 -->
+                        <div class="article-item">
+                            <div class="article-meta">
+                                <span class="article-num">16</span>
+                                <span class="article-date"><i class="fas fa-calendar-alt me-1"></i>Mars 2026</span>
+                                <span class="article-source">rezoactif.com</span>
+                                <span class="article-theme theme-tech">⚙️ Fonctionnement technique</span>
+                            </div>
+                            <div class="article-title"><a href="https://www.rezoactif.com/intelligence-artificielle-guide/" target="_blank">Intelligence artificielle : le guide complet pour les professionnels en 2026 <i class="fas fa-external-link-alt" style="font-size:0.7rem;"></i></a></div>
+                            <p class="article-synthese">Rezo Actif publie un guide professionnel complet sur l'IA en 2026, s'appuyant sur McKinsey, Gartner et IDC. L'article présente les grandes familles d'IA (prédictive, générative, conversationnelle, décisionnelle) et met en lumière l'émergence de l'IA agentique, capable de planifier des actions complexes, d'interagir avec plusieurs systèmes métiers et de s'auto-corriger. Les SLM (Small Language Models) émergent comme alternative compacte et souveraine aux grands modèles, particulièrement adaptés aux contraintes métier.</p>
+                            <p class="article-justif"><strong>Pourquoi conservé ?</strong> Article très récent (mars 2026), s'appuie sur McKinsey, Gartner et IDC. Offre la vision la plus à jour sur les tendances IA — les SLM et l'IA agentique sont des axes d'évolution majeurs pour les développeurs.</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Synthèse -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="card-title"><i class="fas fa-chart-line"></i> 5. Synthèse de la veille</div>
+                        <p style="color:var(--text-secondary);font-size:0.85rem;font-style:italic;margin-bottom:1.5rem;">Cette synthèse est une analyse transversale des tendances observées — pas un résumé article par article.</p>
+
+                        <div style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem;">
+
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <strong style="color:var(--text-primary);font-size:0.9rem;">🔁 Tendance 1 — Du chatbot scriptique à l'agent IA autonome</strong>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0.4rem 0 0;line-height:1.7;">La rupture la plus nette observée dans cette veille est le passage de l'arbre de décision figé vers une compréhension réelle du langage naturel grâce aux LLM. Les chatbots ne répondent plus selon des scripts : ils comprennent le contexte, détectent l'intention et savent quand escalader vers un humain. En 2026, l'IA agentique franchit un nouveau cap : elle peut planifier des actions en plusieurs étapes, interagir avec plusieurs systèmes métiers (CRM, ERP) et s'auto-corriger sans intervention humaine.</p>
+                            </div>
+
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <strong style="color:var(--text-primary);font-size:0.9rem;">📈 Tendance 2 — Une adoption massive, mais inégale selon la taille des entreprises</strong>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0.4rem 0 0;line-height:1.7;">Le marché mondial des chatbots dépasse 15 milliards de dollars en 2025 et devrait atteindre 47 milliards en 2030. 80 % des entreprises utilisent déjà des chatbots IA. Si les grands groupes (H&M, Sephora, IBM) ont ouvert la voie avec des cas d'usage concrets et mesurables, la démocratisation des plateformes no-code est en train de rendre ces outils accessibles aux TPE françaises. Cette tendance est structurelle : elle concerne tous les secteurs et toutes les tailles d'organisations.</p>
+                            </div>
+
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <strong style="color:var(--text-primary);font-size:0.9rem;">⚠️ Tendance 3 — Des limites techniques et éthiques encore importantes</strong>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0.4rem 0 0;line-height:1.7;">Malgré les progrès, les chatbots IA restent limités sur plusieurs points : gestion des émotions complexes, biais algorithmiques liés aux données d'entraînement, risques de manipulation et responsabilité juridique floue en cas d'erreur. Sur le plan réglementaire, le RGPD et l'AI Act européen imposent des obligations croissantes (identification de l'IA, consentement, audit). Ces contraintes sont directement liées au travail d'un développeur SLAM qui intègre ces solutions.</p>
+                            </div>
+
+                            <div style="background:rgba(99,102,241,0.04);border:1px solid rgba(99,102,241,0.12);border-radius:10px;padding:1rem;">
+                                <strong style="color:var(--text-primary);font-size:0.9rem;">🤝 Tendance 4 — L'IA ne remplace pas l'humain, elle le complète</strong>
+                                <p style="color:var(--text-secondary);font-size:0.85rem;margin:0.4rem 0 0;line-height:1.7;">Une contradiction forte ressort de la veille : malgré une adoption massive, 90 % des clients préféreraient attendre pour parler à un humain, et 87 % estiment qu'aucune IA ne pourra remplacer l'aide humaine sur des sujets complexes ou sensibles. Le modèle gagnant n'est donc pas le tout-automatique, mais un modèle hybride où le chatbot traite les demandes répétitives (70 % du volume) et libère les agents humains pour les situations à forte valeur ajoutée.</p>
+                            </div>
+
+                        </div>
+
+                        <div style="background:rgba(99,102,241,0.06);border-left:4px solid var(--primary);padding:1.1rem;border-radius:0 10px 10px 0;">
+                            <p style="color:var(--text-secondary);font-size:0.88rem;margin:0;line-height:1.7;"><strong style="color:var(--primary);">Enjeu clé pour le métier de développeur SLAM :</strong> L'intégration de chatbots via API dans des applications web ou desktop est une compétence de plus en plus demandée. Maîtriser les notions de NLP, d'architecture headless et de connexion CRM devient incontournable. Les développeurs doivent aussi anticiper les contraintes réglementaires (RGPD, AI Act) dès la conception de leurs applications.</p>
+                        </div>
+                    </div>
+
+                    <!-- Bilan -->
+                    <div class="bilan-card" data-aos="fade-up" data-aos-delay="250">
+                        <h3><i class="fas fa-star me-2"></i>Bilan de la démarche</h3>
+                        <p>
+                            Cette veille m'a permis de structurer une démarche professionnelle complète : collecter via Feedly, trier selon des critères stricts (sources spécialisées, contenu nouveau, pertinence métier), analyser et diffuser. Les 15 articles sélectionnés couvrent aussi bien le fonctionnement technique des chatbots IA (NLP, LLM, éthique) que leur adoption concrète par les entreprises (statistiques, cas réels, tendances 2026). En tant que futur développeur SLAM, cette veille est directement applicable : l'intégration d'API IA, la conformité RGPD et la compréhension de l'IA agentique sont des compétences de plus en plus attendues sur le marché.
+                        </p>
+                    </div>
+
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="200">
+                        <div class="card-title"><i class="fas fa-trophy"></i> Compétences mobilisées</div>
+                        <div style="font-size:0.85rem;color:var(--text-secondary);">
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.1);border-radius:10px;padding:0.9rem;margin-bottom:0.6rem;">
+                                <strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Organiser son développement professionnel</strong>
+                                Mettre en œuvre des outils et stratégies de veille informationnelle
+                            </div>
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.1);border-radius:10px;padding:0.9rem;margin-bottom:0.6rem;">
+                                <strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Mettre en place son environnement d'apprentissage personnel</strong>
+                                Utilisation de Feedly pour structurer la collecte d'informations
+                            </div>
+                            <div style="background:rgba(99,102,241,0.05);border:1px solid rgba(99,102,241,0.1);border-radius:10px;padding:0.9rem;">
+                                <strong style="color:var(--primary);display:block;margin-bottom:0.3rem;">Développer son projet professionnel</strong>
+                                Identification des tendances du marché liées au métier de développeur
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="300">
+                        <div class="card-title"><i class="fas fa-info-circle"></i> Infos veille</div>
+                        <table style="width:100%; font-size:0.9rem; color:var(--text-secondary);">
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Sujet</td><td style="padding:0.6rem 0;">Chatbots IA & service client</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Outil</td><td style="padding:0.6rem 0;">Feedly (flux RSS)</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Période</td><td style="padding:0.6rem 0;">Dernier trimestre 2026</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Thématiques</td><td style="padding:0.6rem 0;">2 branches</td></tr>
+                            <tr style="border-bottom:1px solid var(--light-gray);"><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Articles</td><td style="padding:0.6rem 0;"><strong style="color:var(--primary);">16 articles</strong> sélectionnés</td></tr>
+                            <tr><td style="padding:0.6rem 0; font-weight:600; color:var(--text-primary);">Diffusion</td><td style="padding:0.6rem 0;">Portfolio + LinkedIn</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="400">
+                        <div class="card-title"><i class="fas fa-lightbulb"></i> Projet professionnel</div>
+                        <p style="color:var(--text-secondary);font-size:0.88rem;line-height:1.7;">
+                            Mon projet professionnel est encore en construction. Cette veille m'aide à découvrir les évolutions du secteur et à affiner mes centres d'intérêt, notamment autour du développement d'applications intégrant des technologies IA.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="page-footer">
+        <p>© 2025 <a href="index.html">Aymen Mallak</a> — Portfolio BTS SIO SLAM</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>AOS.init({ duration: 700, easing: 'ease-out-cubic', once: true });</script>
+</body>
+</html>
