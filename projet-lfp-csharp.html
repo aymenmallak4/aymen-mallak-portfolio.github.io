@@ -56,6 +56,8 @@
         .code-snippet .keyword { color: #c084fc; }
         .code-snippet .string { color: #fee140; }
         .code-snippet .comment { color: #64748b; }
+        .btn-download-report { display: inline-flex; align-items: center; gap: 0.75rem; padding: 0.9rem 2rem; background: var(--gradient-primary); color: white; border-radius: 50px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(99,102,241,0.4); }
+        .btn-download-report:hover { color: white; opacity: 0.9; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(99,102,241,0.5); }
         .page-footer { background: var(--dark); color: rgba(255,255,255,0.6); padding: 2rem 0; text-align: center; font-size: 0.9rem; }
         .page-footer a { color: rgba(255,255,255,0.8); text-decoration: none; }
         .page-footer a:hover { color: white; }
@@ -287,6 +289,17 @@
                             <span class="tech-badge"><i class="fas fa-cubes"></i> POO</span>
                             <span class="tech-badge"><i class="fas fa-file-code"></i> App.config XML</span>
                         </div>
+                    </div>
+
+                    <!-- Téléchargement diaporama -->
+                    <div class="content-card" data-aos="fade-up" data-aos-delay="320" style="text-align:center;">
+                        <div class="card-title" style="justify-content:center;"><i class="fas fa-file-powerpoint"></i> Diaporama du projet</div>
+                        <p style="color:var(--text-secondary); margin-bottom:1.5rem; font-size:0.95rem;">
+                            Retrouvez la présentation complète de l'application C# WinForms développée dans le cadre du projet LFP.
+                        </p>
+                        <a href="diapo-lfp-csharp.pdf" download style="display:inline-flex;align-items:center;gap:0.75rem;padding:0.9rem 2rem;background:var(--gradient-primary);color:white;border-radius:50px;font-weight:700;font-size:1rem;text-decoration:none;transition:all 0.3s ease;box-shadow:0 4px 15px rgba(99,102,241,0.4);">
+                            <i class="fas fa-download"></i> Télécharger le diaporama (PDF)
+                        </a>
                     </div>
 
                     <!-- Bilan -->
